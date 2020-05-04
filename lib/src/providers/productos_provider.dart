@@ -15,7 +15,7 @@ class ProductosProvider {
 
     final decodedData = json.decode(resp.body); //Estrae solo el cuerpo de la respuesta
 
-    print(decodedData);
+    // print(decodedData);
 
     return true;
 
@@ -55,6 +55,20 @@ class ProductosProvider {
     print(json.decode(resp.body)); //imprimir la respuesta
 
     return 1; //1 quiere decir que se realizo la petición
+
+  }
+
+  Future<bool> editarProducto( ProductoModel producto ) async { //Metodo para crear los productos en la base de datos
+
+    final url = '$_url/productos.json'; //url de la base de productos con formato json
+
+    final resp = await http.post( url, body: productoModelToJson( producto )); //Respuesta de la base de datos
+
+    final decodedData = json.decode(resp.body); //Estrae solo el cuerpo de la respuesta
+
+    // print(decodedData);
+
+    return true;
 
   }
 }

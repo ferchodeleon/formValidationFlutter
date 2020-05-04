@@ -15,7 +15,7 @@ class _ProductoPageState extends State<ProductoPage> {
   final formKey = GlobalKey<FormState>();
   final productoProvider = new ProductosProvider(); //instancia del metodo provider
 
-  ProductoModel producto = new ProductoModel(); //
+  ProductoModel producto = new ProductoModel(); //Crear y actualizar productos
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +126,11 @@ class _ProductoPageState extends State<ProductoPage> {
     print(producto.titulo);
     print(producto.valor);
 
-    productoProvider.crearProducto(producto); //Envía los datos mediante el metodo creado en productos_provider instanciado arriba
+    if ( producto.id == null ){
+      productoProvider.crearProducto(producto); //Envía los datos mediante el metodo creado en productos_provider instanciado arriba
+    }else {
+      productoProvider.crearProducto(producto);
+    }
 
   }
 }
