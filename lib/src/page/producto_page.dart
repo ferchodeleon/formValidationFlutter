@@ -19,6 +19,12 @@ class _ProductoPageState extends State<ProductoPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    ProductoModel prodData = ModalRoute.of(context).settings.arguments;
+    if ( prodData != null) {
+      producto = prodData;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Producto'),
@@ -122,14 +128,14 @@ class _ProductoPageState extends State<ProductoPage> {
 
     formKey.currentState.save(); //Dispara el metodo onSaved en el form
 
-    print('Funcionando OK');
-    print(producto.titulo);
-    print(producto.valor);
+    // print('Funcionando OK');
+    // print(producto.titulo);
+    // print(producto.valor);
 
-    if ( producto.id == null ){
+    if ( producto.id == null ){ //Validación para actualizar o crear
       productoProvider.crearProducto(producto); //Envía los datos mediante el metodo creado en productos_provider instanciado arriba
     }else {
-      productoProvider.crearProducto(producto);
+      productoProvider.editarProducto(producto);
     }
 
   }
