@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
        color: Colors.red,
      ),
      onDismissed: (direccion) {
-       //TODO: borrar producto
+       productosProvider.borrarProducto(producto.id); //Llama al metodo para borrar los productos
      },
      child: ListTile(
        title: Text( '${producto.titulo} - ${producto.valor}' ),
