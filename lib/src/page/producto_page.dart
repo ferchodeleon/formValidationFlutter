@@ -13,9 +13,11 @@ class ProductoPage extends StatefulWidget {
 class _ProductoPageState extends State<ProductoPage> {
 
   final formKey = GlobalKey<FormState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   final productoProvider = new ProductosProvider(); //instancia del metodo provider
 
   ProductoModel producto = new ProductoModel(); //Crear y actualizar productos
+  bool _guardando = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class _ProductoPageState extends State<ProductoPage> {
     }
 
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text('Producto'),
         actions: <Widget>[
@@ -118,7 +121,7 @@ class _ProductoPageState extends State<ProductoPage> {
       textColor: Colors.white,
       label: Text('Guardar'),
       icon: Icon( Icons.save ),
-      onPressed: _submit,
+      onPressed: _guardando ? null : _submit,
     );
   }
 
@@ -132,11 +135,41 @@ class _ProductoPageState extends State<ProductoPage> {
     // print(producto.titulo);
     // print(producto.valor);
 
+    setState(() => _guardando = true);
+
     if ( producto.id == null ){ //Validación para actualizar o crear
       productoProvider.crearProducto(producto); //Envía los datos mediante el metodo creado en productos_provider instanciado arriba
     }else {
       productoProvider.editarProducto(producto);
     }
 
+    // setState(() => _guardando = true);
+    mostrarSnackbar('Registro guardado');
+    Navigator.pop(context);
+
+  }
+
+  void mostrarSnackbar(String mensaje) {
+
+    final snackbar = SnackBar(
+      backgroundColor: Colors.transparent,
+      content: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.red,
+              Colors.white
+            ],
+          )
+        ),
+        height: 50.0,
+        child: Center(
+          child: Text(mensaje)
+        ),
+      ),
+      duration: Duration( milliseconds: 1500 ),
+    );
+
+    scaffoldKey.currentState.showSnackBar(snackbar);
   }
 }
