@@ -60,13 +60,13 @@ class ProductosProvider {
 
   Future<bool> editarProducto( ProductoModel producto ) async { //Metodo para crear los productos en la base de datos
 
-    final url = '$_url/productos.json'; //url de la base de productos con formato json
+    final url = '$_url/productos/${producto.id}.json'; //url de la base de productos con el id para actualizar
 
-    final resp = await http.post( url, body: productoModelToJson( producto )); //Respuesta de la base de datos
+    final resp = await http.put( url, body: productoModelToJson( producto )); //Put para actualizar post para crear
 
     final decodedData = json.decode(resp.body); //Estrae solo el cuerpo de la respuesta
 
-    // print(decodedData);
+    print(decodedData);
 
     return true;
 
