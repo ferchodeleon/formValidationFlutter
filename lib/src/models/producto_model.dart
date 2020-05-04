@@ -28,7 +28,7 @@ class ProductoModel {
     );
 
     Map<String, dynamic> toJson() => {
-        "id"          : id,
+        // "id"          : id, //Se comenta para que no actualice el id en un UPDATE
         "titulo"      : titulo,
         "valor"       : valor,
         "disponible"  : disponible,
