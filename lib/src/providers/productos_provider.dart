@@ -42,8 +42,19 @@ class ProductosProvider {
       productos.add(prodTemp); //Agrego los productos a la lista
     });
 
-    print(productos);
+    // print(productos);
 
     return productos;
+  }
+
+  Future<int> borrarProducto( String id ) async{ //metodo para borrar la información
+
+    final url = '$_url/productos/$id.json'; //Url en firebase para ingresar a solo el producto
+    final resp = await http.delete(url); //Petisión de eliminar
+
+    print(json.decode(resp.body)); //imprimir la respuesta
+
+    return 1; //1 quiere decir que se realizo la petición
+
   }
 }
