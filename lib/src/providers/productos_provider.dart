@@ -13,11 +13,37 @@ class ProductosProvider {
 
     final resp = await http.post( url, body: productoModelToJson( producto )); //Respuesta de la base de datos
 
-    final decodedData = json.decode(resp.body); //Carga los datos y respuesta de la base de datos
+    final decodedData = json.decode(resp.body); //Estrae solo el cuerpo de la respuesta
 
     print(decodedData);
 
     return true;
 
+  }
+
+
+  Future<List<ProductoModel>> cargarProductos() async {
+
+    //Aquí se transforma de un mapa a un listado de productos
+
+    final url = '$_url/productos.json'; //url de la base de productos para consultar los productos
+    final resp = await http.get(url);
+
+    final Map<String, dynamic> decodedData = json.decode(resp.body);
+    final List<ProductoModel> productos = new List(); //Se almacenan la consulta de los productos
+
+    if (decodedData == null) return [];
+
+    decodedData.forEach( (id, prod){
+
+      final prodTemp = ProductoModel.fromJson(prod); //Instancia
+      prodTemp.id = id;
+
+      productos.add(prodTemp); //Agrego los productos a la lista
+    });
+
+    print(productos);
+
+    return productos;
   }
 }
