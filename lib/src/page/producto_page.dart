@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:formvalidation/src/providers/productos_provider.dart';
 
 import 'package:formvalidation/src/utils/utils.dart' as utils;
 import 'package:formvalidation/src/models/producto_model.dart';
@@ -12,6 +13,7 @@ class ProductoPage extends StatefulWidget {
 class _ProductoPageState extends State<ProductoPage> {
 
   final formKey = GlobalKey<FormState>();
+  final productoProvider = new ProductosProvider(); //instancia del metodo provider
 
   ProductoModel producto = new ProductoModel(); //
 
@@ -123,6 +125,8 @@ class _ProductoPageState extends State<ProductoPage> {
     print('Funcionando OK');
     print(producto.titulo);
     print(producto.valor);
+
+    productoProvider.crearProducto(producto); //Envía los datos mediante el metodo creado en productos_provider instanciado arriba
 
   }
 }
