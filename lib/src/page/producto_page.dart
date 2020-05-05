@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:formvalidation/src/providers/productos_provider.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:formvalidation/src/utils/utils.dart' as utils;
 import 'package:formvalidation/src/models/producto_model.dart';
@@ -15,6 +18,7 @@ class _ProductoPageState extends State<ProductoPage> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final productoProvider = new ProductosProvider(); //instancia del metodo provider
+  File foto;
 
   ProductoModel producto = new ProductoModel(); //Crear y actualizar productos
   bool _guardando = false;
@@ -34,11 +38,11 @@ class _ProductoPageState extends State<ProductoPage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.photo_size_select_actual),
-            onPressed: () {},
+            onPressed: _seleccionarFoto,
           ),
           IconButton(
             icon: Icon(Icons.camera_alt),
-            onPressed: () {},
+            onPressed: _tomarFoto,
           )
         ],
       ),
@@ -49,6 +53,7 @@ class _ProductoPageState extends State<ProductoPage> {
             key: formKey,
             child: Column(
               children: <Widget>[
+                _mostrarFoto(),
                 _crearNombre(),
                 _crearPrecio(),
                 _crearDisponible(),
@@ -171,5 +176,45 @@ class _ProductoPageState extends State<ProductoPage> {
     );
 
     scaffoldKey.currentState.showSnackBar(snackbar);
+  }
+
+  Widget _mostrarFoto() {
+
+    if ( producto.fotoUrl !=null ) {
+      //TODO: tengo que hacer esto
+      return Container(
+
+      );
+    }else {
+      return Image(
+        image: AssetImage( foto ?.path ?? 'assets/image/no-image.png'), //pregunta si la fotografia tiene un valor la utiliza en caso que no utiliza la por defecto
+        height: 300.0,
+        fit: BoxFit.cover
+      );
+    }
+  }
+
+
+  _seleccionarFoto() async{
+
+    _procesarImagen(ImageSource.gallery);
+  }
+
+  _tomarFoto() async{
+
+    _procesarImagen(ImageSource.camera);
+  }
+
+  _procesarImagen( ImageSource origen ) async{
+
+    foto = await ImagePicker.pickImage( //parte de la libreria de la imagen para crear la foto
+      source: origen //Trae la foto de la camara
+    );
+
+    if ( foto != null) {
+      //Limpieza
+    }
+
+    setState(() {});
   }
 }
