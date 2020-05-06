@@ -31,7 +31,7 @@ class UsuarioProvider {
       _prefs.token = decodedResp['idToken']; //De esta forma guarda el token
       return {'ok': true, 'token': decodedResp['idToken']};
     }else {
-      return {'ok': false, 'token': decodedResp['erro']['message']};
+      return {'ok': false, 'mensaje': decodedResp['error']['message']};
     }
   }
 
@@ -58,11 +58,8 @@ class UsuarioProvider {
 
       return {'ok': true, 'token': decodedResp['idToken']};
     }else {
-      return {'ok': false, 'token': decodedResp['erro']['message']};
+      return {'ok': false, 'mensaje': decodedResp['error']['message']};
     }
 
   }
-
-
-
 }
